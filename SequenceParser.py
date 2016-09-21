@@ -146,6 +146,5 @@ class FAParser(object):
 
 			else:
 				seq_trail.append(line.rstrip())
-				
-		if seq_trail :
+		if seq_trail:
 			yield id , desc , "".join(seq_trail)
