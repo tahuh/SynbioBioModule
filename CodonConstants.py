@@ -18,6 +18,22 @@
 # GTA V 0.11  7.0(139156)  GCA A 0.23 16.0(317338)  GAA E 0.42 29.0(577846)  GGA G 0.25 16.3(325243)
 # GTG V 0.47 28.9(575438)  GCG A 0.11  7.6(150708)  GAG E 0.58 40.8(810842)  GGG G 0.25 16.4(326879)"""
 
+"""
+Usage
+
+1. Download this source code
+
+You will need following statement on the top of your code
+
+Follow this
+
+import CodonConstants as CC
+
+codon_table = CC.codon_table
+rc_codon_table = CC.REVERSED_CODON
+human_codon_usage = CC.HUMAN_CODON_USAGE
+
+"""
 codon_table = {
     'A': ('GCT', 'GCC', 'GCA', 'GCG'),
     'C': ('TGT', 'TGC'),
