@@ -14,7 +14,7 @@ import CodonConstants
 
 codon_table = CodonConstants.codon_table
 
-base_dict = {"A" : "T" , "C'" : "G" , "G" : "C" , "T" : "A" , "R" : "Y" , "Y" : "R" , "N" : "N"}
+base_dict = {"A" : "T" , "C" : "G" , "G" : "C" , "T" : "A" , "R" : "Y" , "Y" : "R" , "N" : "N"}
 
 
 class Seq(object):
