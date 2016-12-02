@@ -4,7 +4,7 @@
 ChipOligoDesigner.py
 
 This code is advanced version of chip oligo design for members of
-Sythetic Biology Lab.
+Sythetic Biology Lab. (Prof. Bang's group)
 
 This program translates protein sequence in to DN sequence using 
 human codon usage
