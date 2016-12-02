@@ -7,6 +7,11 @@ This module only works for Synbio Lab index excel file format.
 
 Author : Sunghoon Heo
 
+Usage : python IlluminaSampleExtractor.py \
+--excel1 <excel file that contains all index list> \
+--excel2 <your sample list excel file> \
+--out < output file name with path>
+
 2016-12-02 Only MiniSeq avail
 """
 try:
