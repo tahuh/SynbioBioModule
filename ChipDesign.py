@@ -2,6 +2,10 @@
 
 """
 ChipDesign.py
+
+code availity : Prof. Bang's members ( Synthetic biology lab. Yonsei Univ. Korea )
+
+Author : Sunghoon Heo
 """
 
 from argparse import ArgumentParser
