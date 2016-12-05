@@ -13,6 +13,7 @@ Author : Sunghoon Heo
 import CodonConstants
 
 codon_table = CodonConstants.codon_table
+rc_codon_table = CodonConstants.REVERSED_CODON
 
 base_dict = {"A" : "T" , "C" : "G" , "G" : "C" , "T" : "A" , "R" : "Y" , "Y" : "R" , "N" : "N"}
 
@@ -39,7 +40,7 @@ class Seq(object):
 			self.seq += poly_n
 		aa = []
 		for i in xrange(len(self.seq)):
-			codon = self.seq[i:i+1]
+			codon = self.seq[i:i+3]
 			if codon not in codon_table :
 				aa.append("*")
 			else:
@@ -47,6 +48,11 @@ class Seq(object):
 				
 		return ''.join(aa)
 	def to_dna(self) :
-		"""operates on amino acid sequence"
+		"""operates on amino acid sequence"""
 		seq = self.seq
+		ret = []
+		for acid in seq :
+			dna = rc_codon_table[acid]
+			ret.append(dna)
+		return "".join(ret)
 		
