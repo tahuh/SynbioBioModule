@@ -46,3 +46,7 @@ class Seq(object):
 				aa.append(codon_table[codon])
 				
 		return ''.join(aa)
+	def to_dna(self) :
+		"""operates on amino acid sequence"
+		seq = self.seq
+		
