@@ -4,7 +4,7 @@
 ChipOligoDesigner.py
 
 This code is advanced version of chip oligo design for members of
-Sythetic Biology Lab. (Prof. Bang's group)
+Sythetic Biology Lab.
 
 This program translates protein sequence in to DN sequence using 
 human codon usage
@@ -41,16 +41,21 @@ class Designer(object) :
 		self.faname = opts.faname
 		self.oname = opts.oname
 		self.frq = opts.frq
-		self.tile_cov = opts.tile_cov
+		self.coverage = opts.tile_cov
 		self.slide_size = opts.slide_size
 		self.final_add_left = opts.chip_left
 		self.final_add_right = opts.chip_right
+		self.dna_file = open("./log.log" , "w")
+		
 		
 		if self.final_add_left == None:
 			self.final_add_left = ''
 		if self.final_add_right == None:
 			self.final_add_right = ''
-			
+		if self.left_flank == None :
+			self.left_flank = ''
+		if self.right_flank == None:
+			self.right_flank = ''
 		
 		if self.frq == None : self.frq = 0.10
 		
@@ -78,9 +83,13 @@ class Designer(object) :
 		cons_removed = self._remove_consecutive_codons(back_translated)
 		homo_rmv = self._remove_homopolymer(cons_removed)
 		enzyme_removed = self._remove_basI_site(homo_rmv)
+		
+		for id , dna in enzyme_removed :
+			self.dna_file.write(">" + str(id) + "\n" + dna + "\n")
+			
 		inserted = self._insert_dna(enzyme_removed)
 		slice_and_add = self._slice_and_add(inserted)
-		self.records = slice_and_add
+		self.result = slice_and_add
 		
 		
 	def _parse_fasta(self):
@@ -88,9 +97,9 @@ class Designer(object) :
 		
 		fa_parser.open(self.faname)
 		
-		for id , seq in fa_parser.parse() :
+		for id , _ , seq in fa_parser.parse() :
 			self.records.append((id,seq.upper()))
-			
+			print id
 		fa_parser.close()
 		
 	def _insert_dna(self , enz_removed_set):
@@ -103,7 +112,7 @@ class Designer(object) :
 		
 	def __insert_dna(self, dna) :
 		new = self.left_insert + dna + self.right_insert
-		if len(DNA) % (self.slide_size/self.coverage) == 0 :
+		if len(dna) % (self.slide_size/self.coverage) == 0 :
 			return new
 			
 		i = 0
@@ -131,7 +140,7 @@ class Designer(object) :
 			fragments = self.__fragmentation(inserted_dna)
 			ret = []
 			for slice in fragments :
-				new = self.final_add_left + slice + self.final_add_right
+				new = self.final_add_left + BSA_FWD + slice + BSA_REV + self.final_add_right
 				ret.append(new)
 				
 			rets.append((id,ret))
@@ -152,17 +161,17 @@ class Designer(object) :
 	def _remove_homopolymer(self,con_removed) :
 		""" Scan over DNA sequence and remove holompolyers """
 		R = []
-		for id, dna in cons_removed :
+		for id, dna in con_removed :
 			new_dna = self.__remove_homopolymer(dna)
-			R.append((id.new_dna))
+			R.append((id,new_dna))
 			
 		return R
 	def __remove_homopolymer(self,_dna):
 		codon_table = self.codon_table
 		reverse_codon = self.reverse_codon
 		dna = _dna
-		for x in xrange(len(dna)-4):
-			window = dna[x:x+4]
+		for x in xrange(0,len(dna)-5,3):
+			window = dna[x:x+5]
 			if self._is_homopolymer(window):
 				front_codon = dna[x:x+3]
 				a = reverse_codon[front_codon]
@@ -172,7 +181,7 @@ class Designer(object) :
 						dna1 = dna[:x]
 						dna2 = dna[x+3:]
 						dna_temp = dna1 + c + dna2
-						temp_window = dna_temp[x:x+4]
+						temp_window = dna_temp[x:x+5]
 						if not self._is_homopolymer(temp_window):
 							dna = dna_temp
 			else:
@@ -208,8 +217,9 @@ class Designer(object) :
 	def _remove_consecutive_codons(self , translated_list):
 		rmv_set = []
 		for id , dna in translated_list:
+			
 			dna_origin = Seq(dna).translate()
-			rmv_seq = self.__remove_consecutive_codons(seq)
+			rmv_seq = self.__remove_consecutive_codons(dna)
 			rmv_translated = Seq(rmv_seq).translate()
 			C = 0
 			Z = zip(dna_origin , rmv_translated)
@@ -218,7 +228,7 @@ class Designer(object) :
 					C += 1
 					
 			assert len(dna_origin) == C
-			rmv_set.append(id , rmv_seq)
+			rmv_set.append((id , rmv_seq))
 			
 		return rmv_set
 		
@@ -249,7 +259,7 @@ class Designer(object) :
 		S = []
 		for id , dna in cons_removed_set:
 			iid = id
-			basi_removed = __remove_basI_site(dna)
+			basi_removed = self.__remove_basI_site(dna)
 			S.append((iid,basi_removed))
 			
 		return S
