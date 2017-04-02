@@ -37,7 +37,7 @@ class sub_recorder(object):
 			forms.append(self.qual)
 		if not self.misc:
 			forms.append(self.misc)
-		return "\t".join(forms)
+		return "\t".join(map(lambda x : str(x) ,forms))
 class SamReader(object):
 
 	def __init__(self, samfile) :
