@@ -20,6 +20,24 @@ class sub_recorder(object):
 			self.misc = data[11]
 		except IndexError:
 			self.misc = None
+	def build_sam_block(self, id, sam_data):
+		rec = sam_data[id]
+		forms = []
+		forms.append(rec.query)
+		forms.append(rec.flag)
+		forms.append(rec.rname)
+		forms.append(pos)
+		forms.append(mapq)
+		forms.append(cigar)
+		forms.append(rnext)
+		forms.append(pnext)
+		forms.append(slen)
+		forms.append(seq)
+		if not rec.qual:
+			forms.append(rec.qual)
+		if not rec.misc:
+			forms.append(rec.misc)
+		return "\t".join(form)
 class SamReader(object):
 
 	def __init__(self, samfile) :
