@@ -91,7 +91,8 @@ class FQParser(object):
 				self.fqname = fqname
 
 		self.fqfile = format_checker(self.fqname)
-
+	def rewind(self):
+		self.fqfile.seek(0)
 	def close(self) :
 		self.fqfile.close()
 
@@ -127,7 +128,8 @@ class FAParser(object):
 				self.faname = faname
 
 		self.fafile = open(self.faname)
-
+	def rewind(self):
+		self.fafile.seek(0)
 	def close(self) :
 		self.fafile.close()
 
