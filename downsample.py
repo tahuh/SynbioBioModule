@@ -1,0 +1,98 @@
+#!/usr/bin/python
+
+"""
+downsample.py
+
+This code downsamples NGS fastq files
+
+usage:
+
+downsample.py \
+--file1 read1.fq \
+--file2 read2.fq \
+--out1 read1_down.fq \
+--out2 read2_out.fq \
+--rate 0.5 
+
+Author : Sunghoon Heo
+
+Dependency : No dependency
+"""
+import argparse
+import gzip
+import random
+
+def format_checker(fqname) :
+	F = open(fqname,"rb")
+	bytes = F.read(3)
+	if bytes == "\x1f\x8b\x08" :
+		F.seek(0)
+		return gzip.GzipFile(fqname , fileobj=F)
+	else:
+		F.seek(0)
+		return F
+
+class FQParser(object):
+	def __init__(self, fqname=None, format="r"):
+		if not fqname : ## None
+			self.fqname = None
+		else:
+			self.fqname = fqname
+
+	def open(self, fqname=None):
+		if self.fqname == None:
+			if fqname == None:
+				raise AttributeError("File name must be specified")
+			else:
+				self.fqname = fqname
+
+		self.fqfile = format_checker(self.fqname)
+
+	def close(self) :
+		self.fqfile.close()
+
+	def parse(self) :
+		id = ''
+		seq = ''
+		qual = ''
+		for i, line in enumerate(self.fqfile) :
+			if i &3 == 0 : # Case when header
+				id = line.rstrip()
+			elif i & 3 == 1 :
+				seq = line.rstrip()
+			elif i & 3 == 2:
+				continue
+			elif i & 3 == 3 :
+				qual = line.rstrip()
+				yield id, seq, qual
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--file1" , help="fastq file 1" , type=str, required=True)
+parser.add_argument("--file2" , help="fastq file 2" , type=str, required=True)
+parser.add_argument("--out1" , help="Outfile 1" , type=str, required=True)
+parser.add_argument("--out2" , help="Outfile 2" , type=str, required=True)
+parser.add_argument("--rate" , help="Sampling rate. this value much will be sample. default=0.4" , default=0.4)
+
+args = parser.parse_args()
+
+file1 = args.file1
+file2 = args.file2
+rate = args.rate
+
+parser1 = FQParser(file1)
+parser1.open()
+out1 = open(args.out1 , "w")
+for id , seq ,qual in parser1.parse():
+	if random.random() < rate:
+		out1.write(id + "\n" + seq + "\n+\n" + qual + "\n")
+parser1.close()
+out1.close()
+
+parser2 = FQParser(file2)
+parser2.open()
+out2 = open(args.out2 , "w")
+for id , seq ,qual in parser2.parse():
+	if random.random() < rate:
+		out2.write(id + "\n" + seq + "\n+\n" + qual + "\n")
+out2.close()
