@@ -92,17 +92,15 @@ print "RATE : %f"%(rate)
 
 parser1 = FQParser(file1)
 parser1.open()
-out1 = open(args.out1 , "w")
-for id , seq ,qual in parser1.parse():
-	if random.random() < rate:
-		out1.write(id + "\n" + seq + "\n+\n" + qual + "\n")
-parser1.close()
-out1.close()
-
 parser2 = FQParser(file2)
 parser2.open()
+out1 = open(args.out1 , "w")
 out2 = open(args.out2 , "w")
-for id , seq ,qual in parser2.parse():
+for (id , seq ,qual) , (id2,seq2,qual2) in zip(parser1.parse() , parser2.parse()):
 	if random.random() < rate:
-		out2.write(id + "\n" + seq + "\n+\n" + qual + "\n")
+		out1.write(id + "\n" + seq + "\n+\n" + qual + "\n")
+		out2.write(id2 + "\n" + seq2 + "\n+\n" + qual2 + "\n")
+parser1.close()
+parser2.close()
+out1.close()
 out2.close()
