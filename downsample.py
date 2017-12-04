@@ -76,9 +76,19 @@ parser.add_argument("--rate" , help="Sampling rate. this value much will be samp
 
 args = parser.parse_args()
 
+
 file1 = args.file1
 file2 = args.file2
+out1 = args.out1
+out2 = args.out2
 rate = args.rate
+
+print "Settings"
+print "FILE1 : %s"%(file1)
+print "FILE2 : %s"%(file2)
+print "OUT1 : %s"%(out1)
+print "OUT2 : %s"%(out2)
+print "RATE : %f"%(rate)
 
 parser1 = FQParser(file1)
 parser1.open()
