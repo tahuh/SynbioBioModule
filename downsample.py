@@ -72,7 +72,7 @@ parser.add_argument("--file1" , help="fastq file 1" , type=str, required=True)
 parser.add_argument("--file2" , help="fastq file 2" , type=str, required=True)
 parser.add_argument("--out1" , help="Outfile 1" , type=str, required=True)
 parser.add_argument("--out2" , help="Outfile 2" , type=str, required=True)
-parser.add_argument("--rate" , help="Sampling rate. this value much will be sample. default=0.4" , default=0.4)
+parser.add_argument("--rate" , type=float, help="Sampling rate. this value much will be sample. default=0.4" , default=0.4)
 
 args = parser.parse_args()
 
