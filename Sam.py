@@ -7,6 +7,20 @@ Stores Sam record and offers some manipulation functions
 
 This only works for FASTQ read mapped SAM file
 
+CAUTION : Does not support for BAM file
+
+Usage
+
+from Sam import Sam
+
+samfile_name = "some_cool_sam_file_name.sam"
+sam = Sam(samfile_name)
+sam.open()
+
+for sam_record in sam:
+	### process task via accessing member of SamRecord below
+sam.close()
+
 Author : Sunghoon Heo
 """
 
