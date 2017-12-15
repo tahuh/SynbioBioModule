@@ -3,6 +3,8 @@
  * 
  * Raw read QC using Heng Li's kseq.h library
  * 
+ * compile : gcc -O3 -g -o ngre_read_qc ngs_read_qc.c -lz
+ *
  * I wrote this code due to "Too slow" speed of Python language
  * Author : Sunghoon Heo
  */
