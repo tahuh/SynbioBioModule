@@ -5,6 +5,9 @@ downsample.py
 
 This code downsamples NGS fastq files
 
+The original source code was used in TnClone project's Sampler.py
+which originally wrote by BJ Hwang.
+
 usage:
 
 downsample.py \
