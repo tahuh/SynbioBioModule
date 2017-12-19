@@ -4,7 +4,7 @@ Synthetic biology Lab(a.k.a Bang's Lab) Biological data processing module
 Some include useful interface for genome analysis
 
 ## Python version
-Python 2.7
+Python 2.7 </br>
 Pypy
 
 ## System tested
