@@ -8,7 +8,7 @@ Python 2.7
 Pypy
 
 ## System tested
-Ubuntu 14.04 LTS </br></br>
+Ubuntu 14.04 LTS </br>
 Ubuntu 16.04 LTS </br>
 C/C++ Compiler : gcc 4.8.4 , g++ 4.8.4 </br>
 
