@@ -7,20 +7,6 @@ Stores Sam record and offers some manipulation functions
 
 This only works for FASTQ read mapped SAM file
 
-CAUTION : Does not support for BAM file
-
-Usage
-
-from Sam import Sam
-
-samfile_name = "some_cool_sam_file_name.sam"
-sam = Sam(samfile_name)
-sam.open()
-
-for sam_record in sam:
-	### process task via accessing member of SamRecord below
-sam.close()
-
 Author : Sunghoon Heo
 """
 
@@ -45,7 +31,11 @@ class SamRecord:
 		self.tlen = int(data[8])
 		self.seq = data[9]
 		self.qual = data[10]
-		self.aux = data[11:]
+		self.aux = {}
+		for d in data[11:]:
+			k = d.split(":")[0]
+			v = d.split(":")[-1]
+			self.aux[k] = v
 
 	def cigar_alphas(self):
 		return re.split("[0-9]+" , self.cigar)[1:]
@@ -53,6 +43,13 @@ class SamRecord:
 		X = re.split("[MINDNSHPX=]+" , self.cigar)[:-1]
 		M = map(lambda x : int(x) , X)
 		return M
+		
+	def get_tag(self, tag):
+		try:
+			return self.aux[k]
+		except KeyError:
+			return None
+		
 class Sam:
 	def __init__(self , fname):
 		self.fname = fname
@@ -74,3 +71,6 @@ class Sam:
 				self.headers.add(line[1:-1])
 			else:
 				yield SamRecord(line)
+
+	
+		
