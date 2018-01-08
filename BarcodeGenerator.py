@@ -20,7 +20,7 @@ args =parser.parse_args()
 
 o = open(args.outfile , "w")
 sys.stdout.write("Generate\n")
-combs = itertools.combinations_with_replacement("ATGC", args.mers)
+combs = itertools.product("ATGC", repeat=args.mers)
 i = 0
 for c in combs:
     o.write(">barcode-" + str(i) + "\n")
