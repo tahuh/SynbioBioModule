@@ -1,5 +1,11 @@
 #!/usr/bin/python
+"""
+count_num_seqs.py
 
+Count the number of sequences in fasta/fastq file
+
+Author : Thomas Sunghoon Heo
+"""
 import argparse
 import sys
 parser = argparse.ArgumentParser()
