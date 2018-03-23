@@ -11,7 +11,7 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument("--infile", type=str, required= True, help="infile")
 parser.add_argument("--type", type=str,default="fasta", help="infile type(fasta/fastq) default=fasta")
-
+args = parser.parse_args()
 if args.type == 'fasta':
     head = '>'
 elif args.type == 'fastq':
