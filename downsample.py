@@ -13,8 +13,8 @@ usage:
 downsample.py \
 --file1 read1.fq \
 --file2 read2.fq \
---out1 read1_down.fq \
---out2 read2_out.fq \
+--out1 read1_down_out.fq \
+--out2 read2_down_out.fq \
 --rate 0.5 
 
 Author : Sunghoon Heo
