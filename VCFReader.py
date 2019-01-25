@@ -6,6 +6,17 @@ VCFReader.py
 A module that operates for VCF files
 
 Author : Thomas Sunghoon Heo
+
+Usage below
+
+from VCFReader import VCFReader
+
+vcffile_name = "some_vcf_file.vcf"
+vcf_reader = VCFReader(vcffile_name)
+vcf_reader.open()
+for record in vcf_reader.parse():
+	# Do something with VCF record using methods of VCFRecord class
+vcf_reader.close()
 """
 
 import gzip
