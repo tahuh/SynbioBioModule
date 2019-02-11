@@ -95,7 +95,12 @@ class FQParser(object):
 		self.fqfile.seek(0)
 	def close(self) :
 		self.fqfile.close()
-
+	def next(self):
+		id = self.fqfile.readline()
+		seq = self.fqfile.readline()
+		self.fqfile.readline()
+		qual = self.fqfile.readline()
+		return id, seq, qual
 	def parse(self) :
 		id = ''
 		seq = ''
